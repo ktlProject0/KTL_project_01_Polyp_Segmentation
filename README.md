@@ -6,9 +6,6 @@ This repository contains a PyTorch implementation of a polyp segmentation deep l
 
 Below is the directory structure of the project:
 ```bash
-├── checkpoints
-│   ├── metric_logger.json
-│   └── model_statedict.pth
 ├── data
 │   ├── train
 │   │   ├── images
@@ -25,6 +22,9 @@ Below is the directory structure of the project:
 │   └── test
 │       ├── images
 │       └── masks
+├── checkpoints
+│   ├── metric_logger.json
+│   └── model_statedict.pth
 ├── dataset.py
 ├── environment.yml
 ├── loss.py
