@@ -62,7 +62,7 @@ To train the model, run the following script. You can modify training hyperparam
 ```bash
 #if you run with gpu:
   python train.py --data_direc ./data --cuda
-#else you run wit cpu:
+#else you run with cpu:
   python train.py --data_direc ./data
 ```
 - Test the model:
@@ -70,7 +70,7 @@ Once the model is trained, you can evaluate its performance on the test set by r
 ```bash
 #if you run with gpu:
   python test.py --data_direc ./data/ --cuda
-#else you run wit cpu:
+#else you run with cpu:
   python test.py --data_direc ./data
 ```
 
