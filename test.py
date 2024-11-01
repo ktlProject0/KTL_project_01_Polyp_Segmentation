@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
-from model import DenseUNet
+from model import Net
 from dataset import CustomDataset
 from loss import DiceChannelLoss
 
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     test_dataloader = DataLoader(dataset=test_set, num_workers=opt.threads, batch_size=opt.testBatchSize, shuffle=False)
     
     print('===> Building model')
-    model = DenseUNet(n_classes=opt.n_classes).to(device)
+    model = Net(n_classes=opt.n_classes).to(device)
     model.load_state_dict(torch.load(os.path.join(opt.model_save_path,'model_statedict.pth'),map_location=device))
     model.eval()
 
