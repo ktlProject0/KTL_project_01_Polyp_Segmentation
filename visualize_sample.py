@@ -4,7 +4,7 @@ import numpy as np
 
 import torch
 import torch.nn as nn
-from model import DenseUNet
+from model import Net
 from torchvision.datasets.folder import default_loader
 
 import cv2
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     
     device ='cuda'
     
-    model = DenseUNet(n_classes=opt.n_classes).to(device)
+    model = Net(n_classes=opt.n_classes).to(device)
     model.load_state_dict(torch.load(os.path.join(opt.model_save_path,'model_statedict.pth'),map_location=device))
     model.eval()
 
