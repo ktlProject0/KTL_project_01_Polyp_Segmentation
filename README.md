@@ -1,4 +1,4 @@
-# KTL_project_01_Polyp_Segmentation
+# KTL_project_09_Polyp_Segmentation
 
 This repository contains a PyTorch implementation of a polyp segmentation deep learning model. The steps for training and testing the model are outlined below.
 
