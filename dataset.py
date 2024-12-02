@@ -6,34 +6,16 @@ import pandas as pd
 import albumentations as A
 from albumentations.pytorch.transforms import ToTensorV2
 from torch.utils.data import Dataset
+from preprocess import get_image,get_transform
 from torchvision.datasets.folder import default_loader
 
 class CustomDataset(Dataset):
     def __init__(self,direc,mode='eval'):
-        
+        self.mode = mode
         img_path = natsorted(glob.glob(os.path.join(direc,'images','*')))
         mask_path = natsorted(glob.glob(os.path.join(direc,'masks','*')))
         self.meta_df = pd.DataFrame({"image":img_path,'label':mask_path})
-        if mode =='train':
-            self.transform = A.Compose([
-                    A.Resize(width=224, height=224),
-                    A.HorizontalFlip(),
-                    A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0.2, p=0.5),
-                    A.ShiftScaleRotate(shift_limit=(-0.05,0.05),scale_limit=(-0.1,0.2),rotate_limit=(-10,10),p=0.5),
-                    A.Normalize(mean=0.5, 
-                                std=0.5, 
-                                max_pixel_value=1.0, always_apply=True, p=1.0),
-                    ToTensorV2(transpose_mask=True)
-                ])
-        elif mode=='eval':
-            self.transform = A.Compose([
-    A.Resize(width=224, height=224),
-    A.Normalize(mean=0.5, 
-                std=0.5, 
-                max_pixel_value=1.0, always_apply=True, p=1.0),
-    ToTensorV2(transpose_mask=True)
-])
-        
+        self.transform =get_transform(self.mode)
         self.cache={}
         
     def __len__(self):
@@ -45,8 +27,8 @@ class CustomDataset(Dataset):
             sample = self.cache[idx]
         else:
             sample = self.meta_df.iloc[idx,:].to_dict()
+            image = get_image(sample['image']).astype(np.float32)
             
-            image = (np.array(default_loader(sample['image']))/255.).astype(np.float32)
             mask = np.array(default_loader(sample['label']))[...,0]
             mask = mask>100
             mask = np.stack([(mask==x).astype(np.uint8) for x in [0,1]], axis=-1)
@@ -68,8 +50,9 @@ class CustomDataset(Dataset):
         return sample_input
         
 if __name__ == '__main__':
-    train = CustomDataset('/home/hjy/jiyong/synology/jiyong/stomach_1/','train')
-    test = CustomDataset('/home/hjy/jiyong/synology/jiyong/stomach_1/','test')
+    train = CustomDataset('./data/train/')
+    test = CustomDataset('./data/test/')
     for sample_input in train:
         print(sample_input['input'].shape)
         print(sample_input['target'].shape)
+        break

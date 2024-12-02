@@ -1,9 +1,8 @@
-from __future__ import print_function
 import os
 import argparse
 import json
 from tqdm import tqdm
-
+# os.chdir('./KTL_project_09_Polyp_Segmentation')
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -18,7 +17,7 @@ from loss import DiceChannelLoss
 
 if __name__ == '__main__':
     # Training settings
-    parser = argparse.ArgumentParser(description='Poly Segmentation')
+    parser = argparse.ArgumentParser(description='Polyp Segmentation')
     parser.add_argument('--data_direc', type=str,default='./data', help="data directory")
     parser.add_argument('--n_classes', type=int,default=2, help="num of classes")
     parser.add_argument('--batchSize', type=int, default=4, help='training batch size')
@@ -45,12 +44,11 @@ if __name__ == '__main__':
     else:
         device = torch.device("cpu")
     
-    device ='cuda'
     
     print('===> Loading datasets')
     
     test_set = CustomDataset(f"{opt.data_direc}/test",mode='eval')
-    test_dataloader = DataLoader(dataset=test_set, num_workers=opt.threads, batch_size=opt.testBatchSize, shuffle=False)
+    test_dataloader = DataLoader(dataset=test_set, num_workers=opt.threads, batch_size=opt.batchSize, shuffle=False)
     
     print('===> Building model')
     model = Net(n_classes=opt.n_classes).to(device)
@@ -110,6 +108,3 @@ if __name__ == '__main__':
     plt.legend()
     plt.grid()
     plt.savefig(f"test_results/learning_graph_cross_enropy.png",dpi=200)
-
-    
-    
