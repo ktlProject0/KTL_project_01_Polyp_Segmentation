@@ -1,6 +1,6 @@
 # KTL_project_01_Polyp_Segmentation
 
-This repository contains a PyTorch implementation of a polyp segmentation deep learning model. The steps for training and testing the model are outlined below.
+This repository contains a PyTorch implementation of a polyp segmentation deep-learning model. The steps for training and testing the model are outlined below.
 
 ## Directory Structure
 
@@ -29,6 +29,7 @@ Below is the directory structure of the project:
 ├── environment.yml
 ├── loss.py
 ├── model.py
+├── preprocess.py
 ├── test.py
 ├── test_results
 │   └── metric_df.csv
