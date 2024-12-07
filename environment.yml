@@ -1,4 +1,4 @@
-name: 09_polyp_segmentation
+name: KTL_project_01_UpperEndo_Polyp_Segmentation
 channels:
   - conda-forge
   - pytorch
